@@ -17,8 +17,10 @@ class PatientData(BaseModel):
     age: float
 
 
-model = joblib.load("models/knn_diabetes_model.pkl")
-scaler = joblib.load("models/knn_diabetes_scaler.pkl")
+# model = joblib.load("models/knn_diabetes_model.pkl")
+# scaler = joblib.load("models/knn_diabetes_scaler.pkl")
+
+model = joblib.load("models/knn_diabetes_model_pipeline.pkl")
 
 
 @app.post("/predict")
@@ -36,8 +38,10 @@ def predict_diabetes(data: PatientData):
         ]
     ]
 
-    input_scaled = scaler.transform(input_data)
+    # input_scaled = scaler.transform(input_data)
 
-    prediction = model.predict(input_scaled)
+    # prediction = model.predict(input_scaled)
+
+    prediction = model.predict(input_data)
 
     return "Diabetic" if prediction[0] == 1 else "Non-Diabetic"
